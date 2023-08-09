@@ -1,0 +1,8 @@
+possible methods to smooth the loss function:
+-use rmsprop or sgd instead of adam
+-constrain s parameters with sigmoid etc.
+-activation norm
+
+notes:
+-SGD gives nan after 2 epochs always
+-adagrad not noticeably slower than adam even though internet says otherwise
