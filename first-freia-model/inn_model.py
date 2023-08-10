@@ -25,14 +25,11 @@ def test_model_forward(model, test_loader):
     return torch.sum(pred_correct.float()/pred_correct.shape[-1])
 
 def sample_backward(model, cond):
-    y_sample = torch.zeros((1, c.YDIM))
-    y_sample[0, cond] = 1
     z_sample = torch.normal(torch.zeros((1, c.ZDIM)), torch.ones((1, c.ZDIM)))
-    y_and_z_sample = torch.cat([y_sample, z_sample], dim=-1)
-    return model(y_and_z_sample, rev=True)
+    return model(z_sample, c=make_cond_input(cond), rev=True)
 
 def plot_backward_sample(model, cond):
-    x_sample, _ = model(sample_backward(model, cond))
+    x_sample, _ = sample_backward(model, cond)
     x_sample = x_sample.reshape((8,8))
     plt.imshow(x_sample.detach().numpy())
     plt.show()
@@ -49,12 +46,27 @@ def load_model(path):
 def new_model():
     model = Ff.SequenceINN(c.XDIM)
     for k in range(c.N_BLOCKS):
-        model.append(Fm.AllInOneBlock, subnet_constructor=subnet_fc, permute_soft=False)
+        model.append(Fm.AllInOneBlock, cond=k, cond_shape=(c.YDIM,), subnet_constructor=subnet_fc, permute_soft=False)
     return model
 
 def visual_test(cond):
     inn = load_model(c.DEF_PATH)
     plot_backward_sample(inn, cond=cond)
+
+def make_cond_input(labels):
+    """
+    expects a tensor like (4,) or (8, 6, 7, ..., 8)
+    generates a (N_BLOCKS, batchsize, YDIM) tensor of one-hot condition
+    """
+    labels = labels.long()
+    one_hots = torch.zeros((10, 10))
+    for i in range(10):
+        one_hots[i,i] = 1
+    condition = one_hots[labels]
+    condition = condition.unsqueeze(0)
+    return condition.expand((c.N_BLOCKS, condition.shape[1], condition.shape[2]))
+    
+
 
 
 
