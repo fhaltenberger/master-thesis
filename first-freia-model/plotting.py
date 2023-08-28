@@ -34,6 +34,6 @@ def plot_losses(l, zl, ljd, save=False):
     plt.show(block=False)
     
     if save: 
-        plt.savefig(f"figs/losses/zl_ljd_lr{c.LR_INIT}_lrfactor{c.LR_RED_FACTOR}_check.png")
-        print(f"Saved image to ./figs/losses/zl_ljd_lr{c.LR_INIT}_lrfactor{c.LR_RED_FACTOR}_check.png")
+        plt.savefig(f"figs/losses/loss_{c.EXPERIMENT_NAME}.png")
+        print(f"Saved image to ./figs/losses/loss_{c.EXPERIMENT_NAME}.png")
     

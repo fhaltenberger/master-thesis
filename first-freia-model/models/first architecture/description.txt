@@ -1,0 +1,4 @@
+first architecture, reached ljd=150 and z-norm=17, with optimal lr_init=0.01 and reduce_factor=0.6.
+generated mnist samples do not yet resemble digits, but the intensity distribution looks like at least something was learned.
+condition y given to each coupling block's layer as additional input. 
+no training tricks like padding used. 

@@ -9,7 +9,8 @@ import FrEIA.modules as Fm
 import config as c
 
 def subnet_fc(dims_in, dims_out):
-    return nn.Sequential(nn.Linear(dims_in, 512), nn.ReLU(), nn.Linear(512, dims_out))
+    dim = c.SUBNET_HIDDEN_DIM
+    return nn.Sequential(nn.Linear(dims_in, dim), nn.ReLU(), nn.Linear(dim, dim), nn.ReLU(), nn.Linear(dim, dims_out))
 
 def test_model_forward(model, test_loader):
     test_images, test_labels = next(iter(test_loader))
@@ -46,7 +47,7 @@ def load_model(path):
 def new_model():
     model = Ff.SequenceINN(c.XDIM)
     for k in range(c.N_BLOCKS):
-        model.append(Fm.AllInOneBlock, cond=k, cond_shape=(c.YDIM,), subnet_constructor=subnet_fc, permute_soft=False)
+        model.append(Fm.AllInOneBlock, cond=k, cond_shape=(c.YDIM,), subnet_constructor=subnet_fc, permute_soft=True)
     return model
 
 def visual_test(cond):
