@@ -1,12 +1,12 @@
 import torch
 
-XDIM = 64
+XDIM = 28*28
 YDIM = 10
 ZDIM = XDIM
 
-SUBNET_HIDDEN_DIM = 1024
+SUBNET_HIDDEN_DIM = 512
 
-N_BLOCKS = 5
+N_BLOCKS = 12
 
 BATCHSIZE = 128
 N_EPOCHS = 4000
@@ -14,17 +14,8 @@ N_EPOCHS = 4000
 LR_INIT = 1e-3
 LR_RED_FACTOR = 6e-1
 
-Z_LOSS_FACTOR = 7
-
-#COND = torch.Tensor([4,])
-
 ADD_NOISE = False
 X_NOISE_LEVEL = 0.005
 
-#LAMBDA_MAX_LIKELIHOOD = 1
-#LAMBDA_Y_CROSS_ENTROPY = 10
-
-#EPOCHS_REDUCE_LR = [800, 1500]
-
 DEF_PATH = "models/model.pt"
-EXPERIMENT_NAME = "joint_training_ljd-factor-7"
+EXPERIMENT_NAME = "imgsize28x28_nozfactor_12blocks_1hidden"
