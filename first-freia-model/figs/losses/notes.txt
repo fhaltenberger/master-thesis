@@ -1,3 +1,0 @@
-permute soft taken as standard for all tests
-decided for lr_init=0.3, red_factor=0.6 and larger subnets as standard.
-noise only seems to lower performance.
